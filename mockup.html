@@ -6245,9 +6245,113 @@
             opacity: 1;
             transform: translateY(0);
         }
+
+        /* Promotional Banner Styles */
+        .promo-banner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(90deg, #003d73 0%, #0057a6 100%);
+            color: white;
+            padding: 12px 0;
+            z-index: 1001;
+            font-family: 'Source Sans Pro', sans-serif;
+        }
+
+        .promo-banner-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .promo-banner-nav {
+            position: absolute;
+            background: transparent;
+            border: none;
+            color: white;
+            cursor: pointer;
+            padding: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.3s ease;
+        }
+
+        .promo-banner-nav:hover {
+            opacity: 0.7;
+        }
+
+        .promo-banner-nav.prev {
+            left: 20px;
+        }
+
+        .promo-banner-nav.next {
+            right: 20px;
+        }
+
+        .promo-banner-content {
+            text-align: center;
+            font-size: 14px;
+            letter-spacing: 0.3px;
+        }
+
+        .promo-banner-content a {
+            color: white;
+            text-decoration: underline;
+            margin-left: 4px;
+            transition: opacity 0.3s ease;
+        }
+
+        .promo-banner-content a:hover {
+            opacity: 0.8;
+        }
+
+        /* Adjust navbar position for banner */
+        .nav {
+            top: 44px !important;
+        }
+
+        /* Adjust body padding for both banner and navbar */
+        body {
+            padding-top: 44px;
+        }
     </style>
 </head>
 <body>
+    <!-- Promotional Banner -->
+    <div class="promo-banner">
+        <div class="promo-banner-container">
+            <button class="promo-banner-nav prev" aria-label="Previous offer">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+            </button>
+            
+            <div class="promo-banner-content">
+                Boost Your Cellular Energy — Premium NAD+ 1,000mg for Peak Performance.<a href="#products">Shop Now</a>
+            </div>
+            
+            <div class="promo-banner-content" style="display: none;">
+                Free Shipping on Orders Over $75 — Invest in Your Health Today!<a href="#products">Shop Now</a>
+            </div>
+            
+            <div class="promo-banner-content" style="display: none;">
+                Limited Time: Get 20% Off Your First Order — Use Code: CELL20<a href="#products">Shop Now</a>
+            </div>
+            
+            <button class="promo-banner-nav next" aria-label="Next offer">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </button>
+        </div>
+    </div>
+
     <nav class="nav" id="navbar">
         <div class="nav-container">
             <a href="#" class="nav-logo">
@@ -7065,6 +7169,39 @@
     </footer>
 
     <script>
+        // Promo Banner Carousel
+        let currentBanner = 0;
+        const bannerContents = document.querySelectorAll('.promo-banner-content');
+        const prevBtn = document.querySelector('.promo-banner-nav.prev');
+        const nextBtn = document.querySelector('.promo-banner-nav.next');
+
+        function showBanner(index) {
+            bannerContents.forEach((banner, i) => {
+                banner.style.display = i === index ? 'block' : 'none';
+            });
+        }
+
+        function nextBanner() {
+            currentBanner = (currentBanner + 1) % bannerContents.length;
+            showBanner(currentBanner);
+        }
+
+        function prevBanner() {
+            currentBanner = (currentBanner - 1 + bannerContents.length) % bannerContents.length;
+            showBanner(currentBanner);
+        }
+
+        if (nextBtn) {
+            nextBtn.addEventListener('click', nextBanner);
+        }
+
+        if (prevBtn) {
+            prevBtn.addEventListener('click', prevBanner);
+        }
+
+        // Auto-rotate banners every 5 seconds
+        setInterval(nextBanner, 5000);
+
         window.addEventListener('scroll', function() {
             const navbar = document.getElementById('navbar');
             if (window.scrollY > 100) {
