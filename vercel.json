@@ -1,15 +1,3 @@
 {
-  "version": 2,
-  "name": "protocell",
-  "routes": [
-    {
-      "src": "/",
-      "dest": "/mockup.html"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/$1"
-    }
-  ]
+  "version": 2
 }
-
